@@ -20,11 +20,12 @@ const Blog = ({ blog, handleLikesUpdate,handleDelete }) => {
   }
   return (
     <div style = {blogStyle}>
-      <div>
+      <div className='titleAndAuthor'>
         {blog.title} {blog.author}
         <button onClick={handleShowChange}>{showInfo ? 'hide' : 'view'}</button>
       </div>
-      {showInfo && blogBody()}
+
+      {showInfo && <div className='bodyShow'>blogBody()</div>}
     </div>
   )
 

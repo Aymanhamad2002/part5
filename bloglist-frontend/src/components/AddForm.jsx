@@ -28,13 +28,13 @@ const AddForm = ({ onCreate }) => {
     <div>
       <form onSubmit = {addBlog}>
         <div>
-        title:  <input value = {title} onChange = {handleTitleChange}  />
+        title:  <input placeholder='title' value = {title} onChange = {handleTitleChange}  />
         </div>
         <div>
-        author: <input value = {author} onChange = {handleAuthorChange} />
+        author: <input placeholder ='author' value = {author} onChange = {handleAuthorChange} />
         </div>
         <div>
-        url: <input value = {url} onChange ={handleUrlChange} />
+        url: <input placeholder = 'url' value = {url} onChange ={handleUrlChange} />
 
         </div>
         <div>
