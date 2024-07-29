@@ -15,30 +15,31 @@ const AddForm = ({ onCreate }) => {
   const handleUrlChange = event => {
     setUrl(event.target.value)
   }
-  const addBlog =  (event) => {
+  const addBlog = async  (event) => {
     event.preventDefault()
     const newBlog = { title,url,author }
-    onCreate(newBlog)
+    await onCreate(newBlog)
     setAuthor('')
     setTitle('')
     setUrl('')
+    
   }
 
   return (
     <div>
       <form onSubmit = {addBlog}>
         <div>
-        title:  <input placeholder='title' value = {title} onChange = {handleTitleChange}  />
+        title:  <input data-testid ='title' placeholder='title' value = {title} onChange = {handleTitleChange}  />
         </div>
         <div>
-        author: <input placeholder ='author' value = {author} onChange = {handleAuthorChange} />
+        author: <input data-testid = 'author' placeholder ='author' value = {author} onChange = {handleAuthorChange} />
         </div>
         <div>
-        url: <input placeholder = 'url' value = {url} onChange ={handleUrlChange} />
+        url: <input data-testid ='url' placeholder = 'url' value = {url} onChange ={handleUrlChange} />
 
         </div>
         <div>
-          <button type = 'submit'>create</button>
+          <input  type = 'submit' value ='create'/>
         </div>
       </form>
     </div>

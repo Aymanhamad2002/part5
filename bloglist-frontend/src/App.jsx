@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect,useRef } from 'react'
 import LoginForm from './components/LoginForm'
 import blogService from './services/blogs'
 import Blogs from './components/Blogs'
@@ -12,12 +12,13 @@ const App = () => {
   const [password,setPassword] = useState('')
   const [user,setUser] = useState(null)
   const [message ,setMessage] = useState(null)
+  const blogFormRef = useRef()
   const onLogin = async (event) => {
     event.preventDefault()
     try{
       const userTemp = await loginService.login({ username,password })
       window.localStorage.setItem('loggedUser',JSON.stringify(userTemp))
-      blogService.token = userTemp.token
+      blogService.setToken(userTemp.token)
       setUser(userTemp)
       setUsername('')
       setPassword('')
@@ -72,6 +73,7 @@ const App = () => {
 
   const onCreate = async  (newObject) => {
     try{
+      blogFormRef.current.handleVisibility()
       const response = await  blogService.create(newObject)
       setBlogs(blogs.concat(response))
       setMessage(` a new blog ${response.title} by ${response.author} added `)
@@ -106,6 +108,7 @@ const App = () => {
     return (<Blogs blogs ={blogs}
       handleLikesUpdate ={handleLikesUpdate}
       handleDelete = {handleDelete}
+      user = {user}
 
     />)
 
@@ -121,7 +124,7 @@ const App = () => {
   }
 
   useEffect( () => {
-    blogService.getAll().then(result => setBlogs(result.sort((a,b) => a.likes-b.likes)))
+    blogService.getAll().then(result => setBlogs(result.sort((a,b) => b.likes - a.likes)))
   }, [])
 
   useEffect(() => {
@@ -142,7 +145,7 @@ const App = () => {
           <div>{user.username} logged in
             <button onClick={handleLogout}>logout</button>
           </div>
-          <Togglable buttonLabel ='addNote'>
+          <Togglable buttonLabel ='addBlog' ref = {blogFormRef}>
             {addForm()}
           </Togglable>
           {blogss()}

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import BlogBody from './BlogBody'
-const Blog = ({ blog, handleLikesUpdate,handleDelete }) => {
+const Blog = ({ blog, handleLikesUpdate,handleDelete,user }) => {
   const [showInfo,setShowInfo] = useState(false)
   const blogStyle = {
     paddingTop: 10,
@@ -13,19 +13,20 @@ const Blog = ({ blog, handleLikesUpdate,handleDelete }) => {
     return (<BlogBody  blog  = {blog}
       handleLikesUpdate = { handleLikesUpdate}
       handleDelete = {handleDelete}
+      user = {user}
     />)
   }
   const handleShowChange = () => {
     setShowInfo(!showInfo)
   }
   return (
-    <div style = {blogStyle}>
+    <div className = 'blogClass' style = {blogStyle}>
       <div className='titleAndAuthor'>
         {blog.title} {blog.author}
         <button onClick={handleShowChange}>{showInfo ? 'hide' : 'view'}</button>
       </div>
 
-      {showInfo && <div className='bodyShow'>blogBody()</div>}
+      {showInfo && <div className='bodyShow'>{blogBody()}</div>}
     </div>
   )
 
